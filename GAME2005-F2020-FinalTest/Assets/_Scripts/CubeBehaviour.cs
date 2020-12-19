@@ -10,6 +10,7 @@ public class Contact : IEquatable<Contact>
     public CubeBehaviour cube;
     public Vector3 face;
     public float penetration;
+   
 
     public Contact(CubeBehaviour cube)
     {
@@ -59,11 +60,15 @@ public class CubeBehaviour : MonoBehaviour
     public bool isColliding;
     public bool debug;
     public List<Contact> contacts;
-
+    public bool right;
+    public bool left;
+    public bool forward;
+    public bool back;
     private MeshFilter meshFilter;
     public Bounds bounds;
     public bool isGrounded;
-
+    public Vector3 vel;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -73,17 +78,28 @@ public class CubeBehaviour : MonoBehaviour
 
         bounds = meshFilter.mesh.bounds;
         size = bounds.size;
-
+        vel = Vector3.zero;
     }
 
     // Update is called once per frame
     void Update()
-    {
+    {       
         max = Vector3.Scale(bounds.max, transform.localScale) + transform.position;
         min = Vector3.Scale(bounds.min, transform.localScale) + transform.position;
 
     }
+    private void FixedUpdate()
+    {
+        if(isColliding && gameObject.GetComponent<RigidBody3D>().bodyType ==  BodyType.DYNAMIC)
+        {
+            gameObject.GetComponent<RigidBody3D>().isFalling = false;
+            gameObject.GetComponent<RigidBody3D>().Stop();
 
+            //transform.position = new Vector3(transform.position.x, 0.28171f, transform.position.z);
+        }
+        if(!isGrounded)
+            gameObject.GetComponent<RigidBody3D>().isFalling = true;
+    }
     private void OnDrawGizmos()
     {
         if (debug)

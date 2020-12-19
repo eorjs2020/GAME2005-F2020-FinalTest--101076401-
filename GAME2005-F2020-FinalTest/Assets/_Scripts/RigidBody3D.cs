@@ -22,7 +22,9 @@ public class RigidBody3D : MonoBehaviour
     [Header("Attributes")]
     public Vector3 velocity;
     public Vector3 acceleration;
+    public Vector3 moving;
     private float gravity;
+    
 
     // Start is called before the first frame update
     void Start()
@@ -57,6 +59,7 @@ public class RigidBody3D : MonoBehaviour
                     transform.position += velocity;
                 }
             }
+           
         }
     }
 

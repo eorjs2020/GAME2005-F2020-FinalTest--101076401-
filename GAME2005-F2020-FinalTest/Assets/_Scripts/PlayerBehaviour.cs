@@ -34,8 +34,8 @@ public class PlayerBehaviour : MonoBehaviour
     }
 
     private void _Move()
-    {
-        if (isGrounded)
+    {        
+        if (isGrounded )
         {
             if (Input.GetAxisRaw("Horizontal") > 0.0f)
             {
@@ -60,7 +60,7 @@ public class PlayerBehaviour : MonoBehaviour
                 // move Back
                 body.velocity = -playerCam.transform.forward * speed * Time.deltaTime;
             }
-
+            
             body.velocity = Vector3.Lerp(body.velocity, Vector3.zero, 0.9f);
             body.velocity = new Vector3(body.velocity.x, 0.0f, body.velocity.z); // remove y
             
@@ -72,11 +72,46 @@ public class PlayerBehaviour : MonoBehaviour
 
             transform.position += body.velocity;
         }
+        if (body.isFalling)
+        {
+            if (Input.GetAxisRaw("Horizontal") > 0.0f)
+            {
+                // move right
+                body.velocity.x = playerCam.transform.right.x * speed * 0.5f * Time.deltaTime;
+                body.velocity.z = playerCam.transform.right.z * speed * 0.5f * Time.deltaTime;
+            }
+
+            if (Input.GetAxisRaw("Horizontal") < 0.0f)
+            {
+                // move left
+                body.velocity.x = -playerCam.transform.right.x * speed * 0.5f * Time.deltaTime;
+                body.velocity.z = -playerCam.transform.right.z * speed * 0.5f * Time.deltaTime;
+            }
+
+            if (Input.GetAxisRaw("Vertical") > 0.0f)
+            {
+                // move forward
+                body.velocity.z = playerCam.transform.forward.z * speed * 0.5f * Time.deltaTime;
+                body.velocity.x = playerCam.transform.forward.x * speed * 0.5f * Time.deltaTime;
+            }
+
+            if (Input.GetAxisRaw("Vertical") < 0.0f)
+            {
+                // move Back
+                body.velocity.z = -playerCam.transform.forward.z * speed * 0.5f * Time.deltaTime;
+                body.velocity.x = -playerCam.transform.forward.x * speed * 0.5f * Time.deltaTime;
+            }
+            body.velocity.x =  Mathf.Lerp(body.velocity.x,0.0f, 0.9f);
+            body.velocity.z = Mathf.Lerp(body.velocity.z, 0.0f, 0.9f);
+            
+        }
+
     }
 
 
     private void _Fire()
     {
+        
         if (Input.GetAxisRaw("Fire1") > 0.0f)
         {
             // delays firing
@@ -92,6 +127,7 @@ public class PlayerBehaviour : MonoBehaviour
     void FixedUpdate()
     {
         GroundCheck();
+        
     }
 
     private void GroundCheck()
