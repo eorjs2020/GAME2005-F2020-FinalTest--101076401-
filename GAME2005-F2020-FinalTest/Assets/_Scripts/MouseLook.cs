@@ -35,8 +35,12 @@ public class MouseLook : MonoBehaviour
         {
             Cursor.lockState = CursorLockMode.Locked;
         }
+        if (Input.GetKeyDown(KeyCode.M))
+        {
+            Cursor.lockState = CursorLockMode.None;
+        }
 
-        // Allow the script to clamp based on a desired target value.
+            // Allow the script to clamp based on a desired target value.
         var targetOrientation = Quaternion.Euler(targetDirection);
         var targetCharacterOrientation = Quaternion.Euler(targetCharacterDirection);
 

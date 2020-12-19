@@ -55,6 +55,7 @@ public class RigidBody3D : MonoBehaviour
 
                 if (gravityScale > 0)
                 {
+
                     velocity += acceleration * 0.5f * timer * timer;
                     transform.position += velocity;
                 }

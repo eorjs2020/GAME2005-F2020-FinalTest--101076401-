@@ -48,7 +48,7 @@ public class CollisionManager : MonoBehaviour
             {
                 if (cube.name != "Player")
                 {
-                    CheckSphereAABB(sphere, cube);
+                    CheckBulletAABB(sphere, cube);
                 }
                 
             }
@@ -57,7 +57,7 @@ public class CollisionManager : MonoBehaviour
 
     }
 
-    public static void CheckSphereAABB(BulletBehaviour a, CubeBehaviour b)
+    public static void CheckBulletAABB(BulletBehaviour a, CubeBehaviour b)
     {
         if ((a.min.x <= b.max.x && a.max.x >= b.min.x) &&
             (a.min.y <= b.max.y && a.max.y >= b.min.y) &&
